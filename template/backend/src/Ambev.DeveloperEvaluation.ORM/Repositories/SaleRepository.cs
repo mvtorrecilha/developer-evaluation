@@ -19,6 +19,19 @@ public class SaleRepository : ISaleRepository
         return sale;
     }
 
+    /// <summary>
+    /// Retrieves all sales from the database
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>List of sales</returns>
+    public async Task<IEnumerable<Sale>> GetAllAsync(CancellationToken cancellationToken)
+    {
+        return await _context.Sales
+            .Include(s => s.Items)
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+    }
+
     public async Task<Sale?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
     {
         return await _context.Sales
