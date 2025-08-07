@@ -34,4 +34,10 @@ public class SaleRepository : ISaleRepository
         return sale;
     }
 
+    public async Task DeleteAsync(Sale sale)
+    {
+        _context.Sales.Remove(sale);
+        await _context.SaveChangesAsync();
+    }
+
 }
