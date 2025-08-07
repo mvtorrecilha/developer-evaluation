@@ -45,6 +45,15 @@ namespace Ambev.DeveloperEvaluation.Domain.Entities
         /// </summary>
         private SaleItem() { }
 
+        // <summary>
+        /// Initializes a new instance of the <see cref="SaleItem"/> class.
+        /// Throws an exception if the quantity exceeds 20.
+        /// </summary>
+        /// <param name="productId">The ID of the product.</param>
+        /// <param name="productName">The name of the product.</param>
+        /// <param name="quantity">The quantity of the product in the sale (max 20).</param>
+        /// <param name="unitPrice">The unit price of the product.</param>
+        /// <exception cref="ArgumentException">Thrown when quantity is greater than 20.</exception>
         public SaleItem(Guid productId, string productName, int quantity, decimal unitPrice)
         {
             if (quantity > 20)
@@ -58,6 +67,14 @@ namespace Ambev.DeveloperEvaluation.Domain.Entities
             Discount = CalculateDiscount(quantity, unitPrice);
         }
 
+        // <summary>
+        /// Updates the quantity and unit price of the sale item.
+        /// Resets the cancellation status and recalculates the discount.
+        /// Throws an exception if the quantity exceeds 20.
+        /// </summary>
+        /// <param name="quantity">The new quantity of the product (max 20).</param>
+        /// <param name="unitPrice">The new unit price of the product.</param>
+        /// <exception cref="ArgumentException">Thrown when quantity is greater than 20.</exception>
         public void Update(int quantity, decimal unitPrice)
         {
             if (quantity > 20)

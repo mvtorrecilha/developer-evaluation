@@ -62,10 +62,17 @@ namespace Ambev.DeveloperEvaluation.Domain.Entities
 
         /// <summary>
         /// Initializes a new instance of the Sale class.
+        /// Private constructor for ORM or factory methods.
         /// </summary>
         private Sale() { }
 
-
+        /// <summary>
+        /// Initializes a new sale with the specified customer and branch information.
+        /// </summary>
+        /// <param name="customerId">The ID of the customer making the purchase.</param>
+        /// <param name="customerName">The name of the customer.</param>
+        /// <param name="branchId">The ID of the branch where the sale is made.</param>
+        /// <param name="branchName">The name of the branch.</param>
         public Sale(Guid customerId, string customerName, Guid branchId, string branchName)
         {
             CustomerId = customerId;
@@ -74,6 +81,13 @@ namespace Ambev.DeveloperEvaluation.Domain.Entities
             BranchName = branchName;
         }
 
+        /// <summary>
+        /// Adds a new item to the sale.
+        /// </summary>
+        /// <param name="productId">The product ID.</param>
+        /// <param name="productName">The product name.</param>
+        /// <param name="quantity">The quantity of the product.</param>
+        /// <param name="unitPrice">The unit price of the product.</param>
         public void AddItem(Guid productId, string productName, int quantity, decimal unitPrice)
         {
             var item = new SaleItem(productId, productName, quantity, unitPrice);
@@ -81,6 +95,11 @@ namespace Ambev.DeveloperEvaluation.Domain.Entities
             RecalculateTotal();
         }
 
+        /// <summary>
+        /// Updates the sale items based on the provided updated list.
+        /// Cancels items not present in the updated list and updates or adds others.
+        /// </summary>
+        /// <param name="updatedItems">List of updated items with product details.</param>
         public void UpdateItems(List<(Guid ProductId, string ProductName, int Quantity, decimal UnitPrice)> updatedItems)
         {
             foreach (var existingItem in Items)
@@ -108,6 +127,9 @@ namespace Ambev.DeveloperEvaluation.Domain.Entities
             RecalculateTotal();
         }
 
+        /// <summary>
+        /// Recalculates the total amount of the sale by summing all items' amounts.
+        /// </summary>
         private void RecalculateTotal()
         {
             TotalAmount = Items.Sum(x => x.TotalAmount);
@@ -124,7 +146,11 @@ namespace Ambev.DeveloperEvaluation.Domain.Entities
         public void CancelItem(Guid itemId)
         {
             var item = Items.FirstOrDefault(x => x.Id == itemId);
-            item?.Cancel();
+            if (item != null)
+            {
+                item.Cancel();
+                RecalculateTotal();
+            }
         }
 
     }
