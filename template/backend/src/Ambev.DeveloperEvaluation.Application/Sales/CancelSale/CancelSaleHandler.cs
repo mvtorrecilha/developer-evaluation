@@ -34,7 +34,7 @@ public class CancelSaleHandler : IRequestHandler<CancelSaleCommand, CancelSaleRe
 
         sale.CancelSale();
             
-        await _saleRepository.UpdateAsync(sale);
+        await _saleRepository.UpdateAsync(sale, cancellationToken);
 
         return new CancelSaleResult
         {

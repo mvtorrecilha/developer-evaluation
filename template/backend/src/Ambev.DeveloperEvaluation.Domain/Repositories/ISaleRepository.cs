@@ -12,5 +12,5 @@ public interface ISaleRepository
 
     Task<Sale?> UpdateAsync(Sale sale, CancellationToken cancellationToken = default);
 
-    Task DeleteAsync(Sale sale);
+    Task DeleteAsync(Sale sale, CancellationToken cancellationToken = default);
 }

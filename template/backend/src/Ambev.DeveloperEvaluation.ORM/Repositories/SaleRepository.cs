@@ -47,7 +47,7 @@ public class SaleRepository : ISaleRepository
         return sale;
     }
 
-    public async Task DeleteAsync(Sale sale)
+    public async Task DeleteAsync(Sale sale, CancellationToken cancellationToken = default)
     {
         _context.Sales.Remove(sale);
         await _context.SaveChangesAsync();

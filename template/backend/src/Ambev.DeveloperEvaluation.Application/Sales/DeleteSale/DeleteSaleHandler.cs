@@ -31,7 +31,7 @@ public class DeleteSaleHandler : IRequestHandler<DeleteSaleCommand, DeleteSaleRe
         if (sale == null)
             return DeleteSaleResult.FailureResult();
 
-        await _saleRepository.DeleteAsync(sale);
+        await _saleRepository.DeleteAsync(sale, cancellationToken);
 
         return DeleteSaleResult.SuccessResult();
     }
