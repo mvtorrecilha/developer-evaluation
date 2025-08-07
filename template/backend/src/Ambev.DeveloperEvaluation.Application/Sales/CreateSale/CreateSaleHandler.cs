@@ -7,12 +7,19 @@ using Microsoft.Extensions.Logging;
 
 namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
 
+/// <summary>
+/// Handles the creation of a sale.
+/// </summary>
 public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, CreateSaleResult>
 {
     private readonly ISaleRepository _saleRepository;
     private readonly IMapper _mapper;
     private readonly ILogger<CreateSaleHandler> _logger;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="CreateSaleHandler"/> class.
+    /// </summary>
+    /// <param name="saleRepository">The repository to access sales data.</param>
     public CreateSaleHandler(
         ISaleRepository saleRepository,
         IMapper mapper,
@@ -23,6 +30,12 @@ public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, CreateSaleRe
         _logger = logger;
     }
 
+    /// <summary>
+    /// Handles the creation of a new sale.
+    /// </summary>
+    /// <param name="command">The command containing sale creation details.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>The result of the sale creation.</returns>
     public async Task<CreateSaleResult> Handle(CreateSaleCommand command, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Handler {Handler} started with CustomerId: {CustomerId}", nameof(CreateSaleHandler), command.CustomerId);

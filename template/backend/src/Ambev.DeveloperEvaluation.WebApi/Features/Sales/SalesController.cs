@@ -14,10 +14,12 @@ using Ambev.DeveloperEvaluation.WebApi.Features.Sales.UpdateSale;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using OneOf.Types;
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Sales;
 
+/// <summary>
+/// Controller responsible for handling sales-related API requests.
+/// </summary>
 [ApiController]
 [Route("api/[controller]")]
 public class SalesController : BaseController
@@ -34,10 +36,10 @@ public class SalesController : BaseController
     }
 
     /// <summary>
-    /// Retrieves all sales
+    /// Retrieves all sales.
     /// </summary>
     /// <param name="cancellationToken">Cancellation token</param>
-    /// <returns>A list of all sales</returns>
+    /// <returns>A list of all sales.</returns>
     [HttpGet]
     [ProducesResponseType(typeof(ApiResponseWithData<IEnumerable<GetSaleResponse>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
@@ -95,6 +97,12 @@ public class SalesController : BaseController
         });
     }
 
+    /// <summary>
+    /// Creates a new sale.
+    /// </summary>
+    /// <param name="request">The sale creation request payload.</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>The created sale details.</returns>
     [HttpPost]
     [ProducesResponseType(typeof(ApiResponseWithData<CreateSaleResponse>), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
@@ -121,6 +129,13 @@ public class SalesController : BaseController
         });
     }
 
+    /// <summary>
+    /// Updates an existing sale by ID.
+    /// </summary>
+    /// <param name="id">The ID of the sale to update.</param>
+    /// <param name="request">The updated sale data.</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>The updated sale details.</returns>
     [HttpPut("{id:guid}")]
     [ProducesResponseType(typeof(ApiResponseWithData<UpdateSaleResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
@@ -153,6 +168,12 @@ public class SalesController : BaseController
         });
     }
 
+    /// <summary>
+    /// Deletes a sale by its ID.
+    /// </summary>
+    /// <param name="id">The ID of the sale to delete.</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>Success or failure response.</returns>
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]

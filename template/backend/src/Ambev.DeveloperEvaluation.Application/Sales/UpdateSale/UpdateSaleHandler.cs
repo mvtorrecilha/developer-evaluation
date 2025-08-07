@@ -6,12 +6,19 @@ using Microsoft.Extensions.Logging;
 
 namespace Ambev.DeveloperEvaluation.Application.Sales.UpdateSale;
 
+/// <summary>
+/// Handles the update of a sale.
+/// </summary>
 public class UpdateSaleHandler : IRequestHandler<UpdateSaleCommand, UpdateSaleResult>
 {
     private readonly ISaleRepository _saleRepository;
     private readonly IMapper _mapper;
     private readonly ILogger<UpdateSaleHandler> _logger;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="UpdateSaleHandler"/> class.
+    /// </summary>
+    /// <param name="saleRepository">The repository to access sales data.</param>
     public UpdateSaleHandler(
         ISaleRepository saleRepository,
         IMapper mapper,
@@ -23,6 +30,12 @@ public class UpdateSaleHandler : IRequestHandler<UpdateSaleCommand, UpdateSaleRe
         _logger = logger;
     }
 
+    /// <summary>
+    /// Handles updating an existing sale.
+    /// </summary>
+    /// <param name="command">The command containing updated sale details.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>The result of the sale update.</returns>
     public async Task<UpdateSaleResult> Handle(UpdateSaleCommand command, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Handler {UpdateSaleHandler} triggered for SaleId {SaleId}", nameof(UpdateSaleHandler), command.Id);

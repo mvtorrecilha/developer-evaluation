@@ -2,6 +2,9 @@
 
 namespace Ambev.DeveloperEvaluation.Application.Sales.UpdateSale;
 
+/// <summary>
+/// Validator for the UpdateSaleCommand to ensure all required fields are valid.
+/// </summary>
 public class UpdateSaleCommandValidator : AbstractValidator<UpdateSaleCommand>
 {
     public UpdateSaleCommandValidator()
