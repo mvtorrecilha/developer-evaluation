@@ -14,19 +14,11 @@
     "data": [
     {
       "id": "uuid",
-      "customerId": "uuid,
+      "customerId": "uuid",
       "customerName": "string",
       "branchId": "uuid",
       "branchName": "string",
-      "saleDate": "string (date),
-      "saleItems": [
-        {
-          "productId": "uuid",
-          "productName": "string",
-          "quantity": "integer",
-          "unitPrice": "number"
-        }
-      ],
+      "saleDate": "string (date)",
       "totalSaleAmount": "number",
       "isCanceled": "boolean"
     }
