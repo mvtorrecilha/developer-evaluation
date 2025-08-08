@@ -1,3 +1,11 @@
+# Challenge - Sales Management API
+
+A development test for evaluation in a selection process.
+Observing skills in software development, code organization, best practices, and technical problem-solving.
+
+## Getting Started
+Instructions on how to start the project see at [Getting Started](/.doc/getting-started.md)
+
 # Developer Evaluation Project
 
 `READ CAREFULLY`
@@ -76,6 +84,7 @@ This section includes links to the detailed documentation for the different API 
 - [API General](./docs/general-api.md)
 - [Products API](/.doc/products-api.md)
 - [Carts API](/.doc/carts-api.md)
+- [Sales API](/.doc/sales-api.md)
 - [Users API](/.doc/users-api.md)
 - [Auth API](/.doc/auth-api.md)
 -->
