@@ -9,7 +9,10 @@ public class GetAllSalesProfile : Profile
     {
         CreateMap<SaleItem, GetAllSalesSaleItemResult>();
 
+        CreateMap<Sale, GetAllSalesResult>();
+
         CreateMap<Sale, GetAllSalesResult>()
-            .ForMember(dest => dest.SaleItems, opt => opt.MapFrom(src => src.Items));
+            .ForMember(dest => dest.Total, opt => opt.MapFrom(src => src.TotalAmount));
+
     }
 }

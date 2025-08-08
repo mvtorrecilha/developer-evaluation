@@ -12,7 +12,6 @@ public class GetAllSalesProfile : Profile
         CreateMap<GetAllSalesSaleItemResult, GetSaleItemResponse>();
 
         CreateMap<GetAllSalesResult, GetSaleResponse>()
-            .ForMember(dest => dest.SaleItems, opt => opt.MapFrom(src => src.SaleItems))
             .ForMember(dest => dest.CustomerName, opt => opt.MapFrom(src => src.CustomerName))
             .ForMember(dest => dest.BranchId, opt => opt.MapFrom(src => src.BranchId))
             .ForMember(dest => dest.BranchName, opt => opt.MapFrom(src => src.BranchName))

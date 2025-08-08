@@ -174,11 +174,11 @@
     "data": [
 		{
 		  "id": "uuid",
-		  "customerId": "uuid,
+		  "customerId": "uuid",
 		  "customerName": "string",
 		  "branchId": "uuid",
 		  "branchName": "string",
-		  "saleDate": "string (date),
+		  "saleDate": "string (date)",
 		  "saleItems": [
 			{
 			  "productId": "uuid",
@@ -278,19 +278,19 @@
 - Request Body:
   ```json
   {
-	  "id": "uuid",
-	  "customerId": "uuid",
-	  "customerName": "string",
-	  "branchId": "uuid",
-	  "branchName": "string",
-	  "cartItems": [
-		{
-		  "productId": "uuid",
-		  "productName": "string",
-		  "quantity": "integer",
-          "unitPrice": "number"
-		}
-	  ]
+	 "id": "uuid",
+	 "customerId": "uuid",
+	 "customerName": "string",
+	 "branchId": "uuid",
+	 "branchName": "string",
+	 "cartItems": [
+	  {
+	    "productId": "uuid",
+		"productName": "string",
+		"quantity": "integer",
+		"unitPrice": "number"
+	  }
+	 ]
   }
   ```
 - Response: 
@@ -348,14 +348,7 @@
     "message": "string"
   }
   ```
-
-<br>
-<div style="display: flex; justify-content: space-between;">
-	<a href="./carts-api.md">Previous: Carts API</a>
-  <a href="./users-api.md">Next: Users API</a>
-</div>
-  ```
-
+  
 
 <br>
 <div style="display: flex; justify-content: space-between;">

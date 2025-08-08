@@ -1,5 +1,7 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Repositories;
+﻿using Ambev.DeveloperEvaluation.Application.Sales.UpdateSale;
+using Ambev.DeveloperEvaluation.Domain.Repositories;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Ambev.DeveloperEvaluation.Application.Sales.CancelSale;
 
@@ -9,14 +11,20 @@ namespace Ambev.DeveloperEvaluation.Application.Sales.CancelSale;
 public class CancelSaleHandler : IRequestHandler<CancelSaleCommand, CancelSaleResult>
 {
     private readonly ISaleRepository _saleRepository;
+    private readonly ILogger<CancelSaleHandler> _logger;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CancelSaleHandler"/> class.
     /// </summary>
     /// <param name="saleRepository">The repository to access sales data.</param>
-    public CancelSaleHandler(ISaleRepository saleRepository)
+    /// <param name="logger">The logger instance.</param>
+    public CancelSaleHandler(
+        ISaleRepository saleRepository,
+        ILogger<CancelSaleHandler> logger
+        )
     {
         _saleRepository = saleRepository;
+        _logger = logger;
     }
 
     /// <summary>
@@ -26,15 +34,22 @@ public class CancelSaleHandler : IRequestHandler<CancelSaleCommand, CancelSaleRe
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>A result indicating the success of the cancellation.</returns>
     /// <exception cref="KeyNotFoundException">Thrown when the sale is not found.</exception>
-    public async Task<CancelSaleResult> Handle(CancelSaleCommand request, CancellationToken cancellationToken)
+    public async Task<CancelSaleResult> Handle(CancelSaleCommand command, CancellationToken cancellationToken)
     {
-        var sale = await _saleRepository.GetByIdAsync(request.Id);
+        _logger.LogInformation("Handler {CancelSaleHandler} triggered for SaleId {SaleId}", nameof(UpdateSaleHandler), command.Id);
+
+        var sale = await _saleRepository.GetByIdAsync(command.Id);
         if (sale == null)
-            throw new KeyNotFoundException($"Sale with Id {request.Id} not found.");
+            throw new KeyNotFoundException($"Sale with Id {command.Id} not found.");
 
         sale.CancelSale();
             
         await _saleRepository.UpdateAsync(sale, cancellationToken);
+
+        _logger.LogInformation("Sale cancelled successfully. {SaleId}", command.Id);
+
+        //TODO: Publish ItemCancelled
+        _logger.LogInformation("SaleCancelled published successfully for SaleId: {SaleId}", command.Id);
 
         return new CancelSaleResult
         {

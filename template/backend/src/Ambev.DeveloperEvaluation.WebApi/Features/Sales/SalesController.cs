@@ -1,10 +1,12 @@
-﻿using Ambev.DeveloperEvaluation.Application.Sales.CancelSale;
+﻿using Ambev.DeveloperEvaluation.Application.Sales.CancelItemSale;
+using Ambev.DeveloperEvaluation.Application.Sales.CancelSale;
 using Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
 using Ambev.DeveloperEvaluation.Application.Sales.DeleteSale;
 using Ambev.DeveloperEvaluation.Application.Sales.GetAllSales;
 using Ambev.DeveloperEvaluation.Application.Sales.GetSale;
 using Ambev.DeveloperEvaluation.Application.Sales.UpdateSale;
 using Ambev.DeveloperEvaluation.WebApi.Common;
+using Ambev.DeveloperEvaluation.WebApi.Features.Sales.CancelItemSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.CancelSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.CreateSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.DeleteSale;
@@ -230,6 +232,47 @@ public class SalesController : BaseController
             Success = true,
             Message = "Sale canceled successfully",
             Data = response
+        });
+    }
+
+    /// <summary>
+    /// Cancels a specific item within a sale.
+    /// </summary>
+    /// <param name="saleId">The ID of the sale</param>
+    /// <param name="itemId">The ID of the sale item</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>The result of the operation</returns>
+    [HttpPut("{saleId:guid}/items/{itemId:guid}/cancel")]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> CancelItemSale(
+        [FromRoute] Guid saleId,
+        [FromRoute] Guid itemId,
+        CancellationToken cancellationToken)
+    {
+        _logger.LogInformation("Controller {SalesController} triggered to handle CancelItemSale for SaleId {SaleId} and ItemId {ItemId}",
+            nameof(SalesController), saleId, itemId);
+
+        var request = new CancelItemSaleRequest
+        {
+            SaleId = saleId,
+            ItemId = itemId
+        };
+
+        var validator = new CancelItemSaleRequestValidator();
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+            return BadRequest(validationResult.Errors);
+
+        var command = _mapper.Map<CancelItemSaleCommand>(request);
+        await _mediator.Send(command, cancellationToken);
+
+        return Ok(new ApiResponse
+        {
+            Success = true,
+            Message = "Item cancelled successfully"
         });
     }
 }

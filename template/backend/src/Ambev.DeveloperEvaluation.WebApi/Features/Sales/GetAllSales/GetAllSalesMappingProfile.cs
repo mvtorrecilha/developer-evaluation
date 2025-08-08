@@ -10,8 +10,10 @@ public class GetAllSalesMappingProfile : Profile
     public GetAllSalesMappingProfile()
     {
         CreateMap<GetAllSalesRequest, GetAllSalesQuery>();
+
         CreateMap<Sale, GetSaleResponse>()
             .ForMember(dest => dest.SaleItems, opt => opt.MapFrom(src => src.Items));
+
         CreateMap<SaleItem, GetSaleItemResponse>();
     }
 }

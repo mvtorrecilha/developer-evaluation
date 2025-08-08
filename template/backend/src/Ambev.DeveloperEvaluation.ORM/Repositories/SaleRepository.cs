@@ -27,7 +27,6 @@ public class SaleRepository : ISaleRepository
     public async Task<IEnumerable<Sale>> GetAllAsync(CancellationToken cancellationToken)
     {
         return await _context.Sales
-            .Include(s => s.Items)
             .AsNoTracking()
             .ToListAsync(cancellationToken);
     }
@@ -36,8 +35,8 @@ public class SaleRepository : ISaleRepository
     {
         return await _context.Sales
           .AsNoTracking()
-         .Include(s => s.Items)
-         .FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
+          .Include(s => s.Items)
+          .FirstOrDefaultAsync(o => o.Id == id, cancellationToken);
     }
 
     public async Task<Sale?> UpdateAsync(Sale sale, CancellationToken cancellationToken = default)
@@ -50,7 +49,7 @@ public class SaleRepository : ISaleRepository
     public async Task DeleteAsync(Sale sale, CancellationToken cancellationToken = default)
     {
         _context.Sales.Remove(sale);
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(cancellationToken);
     }
 
 }

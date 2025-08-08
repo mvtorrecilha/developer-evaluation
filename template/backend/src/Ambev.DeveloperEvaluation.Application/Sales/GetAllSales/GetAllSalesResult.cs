@@ -16,7 +16,5 @@ public record GetAllSalesResult
 
     public decimal Total { get; set; }
 
-    public List<GetAllSalesSaleItemResult> SaleItems { get; set; } = [];
-
     public bool Cancelled { get; set; }
 }
