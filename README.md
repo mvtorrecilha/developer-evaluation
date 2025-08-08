@@ -4,7 +4,7 @@ A development test for evaluation in a selection process.
 Observing skills in software development, code organization, best practices, and technical problem-solving.
 
 ## Getting Started
-Instructions on how to start the project see at [Getting Started](/.docs/getting-started.md)
+Instructions on how to start the project see at [Getting Started](/.doc/getting-started.md)
 
 # Developer Evaluation Project
 
