@@ -3,6 +3,7 @@ using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Unit.Application.TestData.Sales;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Xunit;
 
@@ -12,11 +13,13 @@ public class CancelSaleHandlerTests
 {
     private readonly ISaleRepository _saleRepository;
     private readonly CancelSaleHandler _handler;
+    private readonly ILogger<CancelSaleHandler> _logger;
 
     public CancelSaleHandlerTests()
     {
         _saleRepository = Substitute.For<ISaleRepository>();
-        _handler = new CancelSaleHandler(_saleRepository);
+        _logger = Substitute.For<ILogger<CancelSaleHandler>>();
+        _handler = new CancelSaleHandler(_saleRepository, _logger);
     }
 
     [Fact(DisplayName = "Given valid command When handling Then cancels the sale successfully")]

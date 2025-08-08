@@ -4,6 +4,7 @@ using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Unit.Application.TestData.Sales;
 using AutoMapper;
 using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Xunit;
 
@@ -14,12 +15,14 @@ public class GetSaleHandlerTests
     private readonly ISaleRepository _saleRepository;
     private readonly IMapper _mapper;
     private readonly GetSaleHandler _handler;
+    private readonly ILogger<GetSaleHandler> _logger;
 
     public GetSaleHandlerTests()
     {
         _saleRepository = Substitute.For<ISaleRepository>();
         _mapper = Substitute.For<IMapper>();
-        _handler = new GetSaleHandler(_saleRepository, _mapper);
+        _logger = Substitute.For<ILogger<GetSaleHandler>>();
+        _handler = new GetSaleHandler(_saleRepository, _mapper, _logger);
     }
 
     [Fact(DisplayName = "Given existing sale When handling Then returns mapped sale result")]
